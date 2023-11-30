@@ -24,13 +24,41 @@ const textureLoader = new THREE.TextureLoader()
  * House
  */
 // Temporary sphere
-const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(1, 32, 32),
-    new THREE.MeshStandardMaterial({ roughness: 0.7 })
-)
-sphere.position.y = 1
-scene.add(sphere)
+// creating groups
+const house=new THREE.Group()
+scene.add(house)
 
+//creating walll
+const wall=new THREE.Mesh(
+    new THREE.BoxBufferGeometry(4,2.5,4),
+    new THREE.MeshStandardMaterial({ color: '#ac8e82' })
+)
+wall.position.y=1.25
+house.add(wall)
+// creating roof
+const roof=new THREE.Mesh(
+    new THREE.ConeBufferGeometry(3.5,1,4),
+    new THREE.MeshStandardMaterial({ color: '#b35f45' })
+)
+roof.position.y=2.5+0.5
+roof.rotation.y=Math.PI*0.25
+house.add(roof)
+//gate
+const gate=new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1.5,2),
+    new THREE.MeshStandardMaterial({color: '#b35f45' })
+)
+gate.position.y=1
+gate.position.z=2+0.01
+scene.add(gate)
+//busshes
+const bushgeometry=new THREE.SphereBufferGeometry(1,16,16)
+const bushmaterial=new THREE.MeshStandardMaterial({color:'#89c854'})
+
+const bush1=new THREE.Mesh(bushgeometry,bushmaterial)
+bush1.scale.set(0.5,0.5,0.5)
+bush1.position.set(0.8,0.2,2.5)
+scene.add(bush1)
 // Floor
 const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(20, 20),
@@ -47,7 +75,6 @@ scene.add(floor)
 const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
 gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
-
 // Directional light
 const moonLight = new THREE.DirectionalLight('#ffffff', 0.5)
 moonLight.position.set(4, 5, - 2)
